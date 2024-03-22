@@ -28,13 +28,33 @@
   /////////////////////////////////////////////////
 
   //CREATE USERS
-  exports.createUsers = function(req, res) {
-    bodyParser(req)
+  exports.createUsers = async function(req, res) {
+    await bodyParser(req)
     database.push(req.body)
 
     let response = [
         {
             "message": "Create users"
+        },
+        database,
+    ];
+
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify(response))
+
+  };
+
+  //REFRESHhh USERS
+  exports.updateUsers = async function(req, res) {
+    await bodyParser(req)
+    //database.push(req.body)
+    const urlParser = url.parse(req.url, true);
+    console.log(urlParser)
+
+    let response = [
+        {
+            "message": "Update users"
         },
         database,
     ];
