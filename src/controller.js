@@ -1,4 +1,5 @@
   const url = require("url");
+  const {bodyParser} = require("./libs/bodyParser")
 
   const database = [
     {
@@ -27,10 +28,13 @@
   /////////////////////////////////////////////////
 
   //CREATE USERS
-  exports.getUsers = function(req, res) {
+  exports.createUsers = function(req, res) {
+    bodyParser(req)
+    database.push(req.body)
+
     let response = [
         {
-            "message": "Create all users"
+            "message": "Create users"
         },
         database,
     ];
