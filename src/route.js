@@ -1,8 +1,12 @@
 const http = require("http");
+const url = require("url");
 
 module.exports  = http.createServer((req, res) => {
+    const apiOptions = require(".controller");
+    const urlParser = url.parse(req.url, true);
 
-    res.statusCode = 200;
-    res.setHeader("Content-Type", "application/json");
-    res.end(JSON.stringify({"message": "Hello World"}))
+    console.log(`Resquest hostname ${urlParser.method}`)
+
+    //...
+    
 });
