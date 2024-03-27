@@ -5,7 +5,7 @@ module.exports  = http.createServer((req, res) => {
     const apiOptions = require("./controller");
     const urlParser = url.parse(req.url, true);
 
-    console.log(`Resquest hostname ${urlParser.method}`)
+    console.log(`Request hostname ${req.method}`)
     //...
 
     switch(req.method) {
@@ -15,11 +15,20 @@ module.exports  = http.createServer((req, res) => {
             }
             break;
         case "POST":
-            if(urlParser.pathname === "/users"){
+            if (urlParser.pathname === "/users"){
                 apiOptions.createUsers(req, res);
             }
+        break;
         case "PUT": 
-        apiOptions.updateUsers(req, res);
+        if (urlParser.pathname === "/users") {
+          apiOptions.updateUsers(req, res);
+        }
+        break;
+        case "DELETE": 
+        if (urlParser.pathname === "/users") {
+          apiOptions.deleteUSers(req, res);
+        }
+        break;
         default:
             return;
     }

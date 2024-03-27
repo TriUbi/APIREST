@@ -47,20 +47,57 @@
 
   //REFRESHhh USERS
   exports.updateUsers = async function(req, res) {
-    await bodyParser(req)
-    //database.push(req.body)
     const urlParser = url.parse(req.url, true);
-    console.log(urlParser)
 
-    let response = [
+    const idQuery = urlParser.path.split("?")[1];
+    const key = idQuery.split("=")[0];
+    const value = idQuery.split("=")[1];
+  
+   
+    if (key === "id"){
+        await bodyParser(req);
+        database[value - 1] = req.body; 
+        
+        let response = [
         {
             "message": "Update users"
         },
         database,
-    ];
-
+    ]; 
     res.statusCode = 200;
     res.setHeader("Content-Type", "application/json");
     res.end(JSON.stringify(response))
+    } else {
+        res.statusCode = 200;
+        res.setHeader("Content-Type", "application/json");
+        res.end(JSON.stringify({"message": "key is wrong"}))
+    }
+};
 
-  };
+//DELETEEEEE
+exports.deleteUSers = async function(req, res) {
+    const urlParser = url.parse(req.url, true);
+
+    const idQuery = urlParser.path.split("?")[1];
+    const key = idQuery.split("=")[0];
+    const value = idQuery.split("=")[1];
+  
+   
+    if (key === "id"){
+        database.splice(value - 1, 1)
+        
+        let response = [
+        {
+            "message": "Delete user"
+        },
+        database,
+    ]; 
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify(response))
+    } else {
+        res.statusCode = 200;
+        res.setHeader("Content-Type", "application/json");
+        res.end(JSON.stringify({"message": "key is wrong"}))
+    }
+};
